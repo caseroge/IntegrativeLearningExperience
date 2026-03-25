@@ -48,12 +48,14 @@ base.mod <- glm(resistant.f ~ ever_deten.f + hiv.f + sexM.f + rural.f + homeless
 summary(glm.moldova.adj)
 exp(coef(glm.moldova.adj))
 exp(confint(glm.moldova.adj))
-Cstat(glm.moldova) #0.649 poor discrimination
+Cstat(glm.moldova.adj) #0.649 poor discrimination
 hoslem.test(moldova$resistant.f[complete_cases], fitted(glm.moldova.adj), g = 10) #p = 2.2e-6 bad (shows poor fit)
 Anova(glm.moldova.adj, type=c('III'), test="Wald")
 lrtest(base.mod, glm.moldova.adj) #p = 0.7169 not significant
 
 summary(base.mod)
+exp(coef(base.mod))
+exp(confint(base.mod))
 
 
 

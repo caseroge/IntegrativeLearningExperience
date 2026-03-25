@@ -30,6 +30,7 @@ tab1 <- summary(table1_cohort,
           edu.f="Educational Status",
           hiv.f="HIV Co-Infection Status"
           ))
+tab1
 write2word(table1_cohort, "ILE_table1_test.docx",
         title = "Table 1.",
         digits = 2,

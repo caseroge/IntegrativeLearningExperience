@@ -3,7 +3,11 @@ pacman::p_load(tidyverse, readr, readxl, lubridate, arsenal, openxlsx)
 moldova_raw <- read_xlsx("Moldova_data_for_ILE.xlsx") #read in file
 dim(moldova_raw) #check dimension
 #select only desired vars 
-moldova1 <- moldova_raw %>% dplyr::select(
+moldova_restrict_raw <- moldova_raw %>% filter(P24 == 1)
+dim(moldova_restrict_raw)
+dim(moldova_raw)[1] - dim(moldova_restrict_raw)[1] #deleted 3721 observations 
+
+moldova1 <- moldova_restrict_raw %>% dplyr::select(
   ID = a.ID,
   detention = P11,
   iso = P21_H,
