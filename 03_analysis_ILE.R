@@ -37,8 +37,11 @@ stepAIC(glm.moldova, direction = 'both', k = log(11687)) #BIC - removes examinat
 #regular fit model is good
 
 #5. add HIV as effect modifier 
-glm.moldova.adj <- glm(resistant.f ~ ever_deten.f + sexM.f + rural.f + homeless.f + jobcat.f + edu.f + age_diag * hiv.f, 
+glm.moldova.adj <- glm(resistant.f ~ ever_deten.f * hiv.f + sexM.f + rural.f + homeless.f + jobcat.f + edu.f + age_diag, 
                                data = moldova, family = binomial(link = "logit"))
+
+base.mod <- glm(resistant.f ~ ever_deten.f + hiv.f + sexM.f + rural.f + homeless.f + jobcat.f + edu.f + age_diag, 
+                data = moldova, family = binomial(link = "logit"))
 
 
 #6. test for effect modifications
@@ -48,7 +51,9 @@ exp(confint(glm.moldova.adj))
 Cstat(glm.moldova) #0.649 poor discrimination
 hoslem.test(moldova$resistant.f[complete_cases], fitted(glm.moldova.adj), g = 10) #p = 2.2e-6 bad (shows poor fit)
 Anova(glm.moldova.adj, type=c('III'), test="Wald")
-lrtest(glm.moldova, glm.moldova.adj) #p = 0.7169 not significant
+lrtest(base.mod, glm.moldova.adj) #p = 0.7169 not significant
+
+summary(base.mod)
 
 
 

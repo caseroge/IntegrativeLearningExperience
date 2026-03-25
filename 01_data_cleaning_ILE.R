@@ -71,7 +71,7 @@ moldova2 <- moldova1 %>% mutate(
     hiv == 2 ~ 1,
     TRUE ~ 0
   ),
-  hiv.f = factor(ever_deten, levels = c(0,1), labels = c("No HIV Co-Infection", "HIV Co-Infection")), #factor HIV
+  hiv.f = factor(hiv, levels = c(0,1), labels = c("No HIV Co-Infection", "HIV Co-Infection")), #factor HIV
   bday = base::as.Date(bday), #clean bday date
   diagnosis_day = base::as.Date(diagnosis_day), #clean diagnosis day date
   age_diag = floor(time_length(interval(bday, diagnosis_day), "years")) #age using lubridate package
