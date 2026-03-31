@@ -17,13 +17,13 @@ table2 <- modelsum(resistant.f ~ ever_deten.f,
 
 summary(table2, text = TRUE, digits = 3)
 
-#write2word(table2, "table2_ile.docx", title = "Table 2")
+write2word(table2, "table2_ile_test.docx", title = "Table 2")
 
 # First convert the arsenal table to a dataframe
-#table2_df <- as.data.frame(table2)
+table2_df <- as.data.frame(table2)
 
 # Then write to Excel
-#write.xlsx(table2_df, "table2_ile.xlsx")
+write.xlsx(table2_df, "table2_ile_test.xlsx")
 
 
 #figure (tree plot maybe)

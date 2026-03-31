@@ -2,6 +2,10 @@
 source("01_data_cleaning_ILE.R")
 pacman::p_load(tidyverse, readr, readxl, lubridate, arsenal, openxlsx)
 
+range(moldova1$diagnosis_day) #01/01/2008 - 12-31-2009
+table(moldova1$iso, moldova1$rif, useNA = "always") #no NA values for these
+table(moldova$resistant.f, moldova$ever_deten.f, useNA = "always") #174 NA values from detention status 
+
 #creating table 1
 table1_cohort <- tableby(
   ever_deten.f~ + sexM.f + age_diag + rural.f + homeless.f + jobcat.f + edu.f + hiv.f,
@@ -45,11 +49,11 @@ write2word(table1_cohort, "ILE_table1_test.docx",
           hiv.f="HIV Co-Infection Status"
         ))
 
-# First convert the arsenal table to a dataframe
-#table1_df <- as.data.frame(tab1)
+#First convert the arsenal table to a dataframe
+table1_df <- as.data.frame(tab1)
 
-# Then write to Excel
-#write.xlsx(table1_df, "table1.xlsx")
+#Then write to Excel
+write.xlsx(table1_df, "table1_test.xlsx")
 
 
 
