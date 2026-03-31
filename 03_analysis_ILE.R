@@ -2,11 +2,7 @@
 source("02_descriptive_statistics_ILE.R", echo = T)
 pacman::p_load(tidyverse, readr, readxl, lubridate, arsenal, openxlsx, logbin, ResourceSelection, car, DescTools, lmtest)
 dim(moldova)
-#1. fitting general log binomial 
-
-#logB.moldova.squarem <- logbin(resistant.f ~ ever_deten.f + sexM.f + rural.f + homeless.f + jobcat.f + edu.f + age_diag, 
-                   #    data = moldova,
-                   #    accelerate = "squarem")
+#1. fit eneral 
 
 glm.moldova <- glm(resistant.f ~ ever_deten.f + sexM.f + rural.f + homeless.f + jobcat.f + edu.f + age_diag, 
                                data = moldova,
