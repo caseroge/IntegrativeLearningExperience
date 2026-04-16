@@ -86,3 +86,4 @@ moldova <- moldova3
 sapply(moldova, function(x) {table(x, useNA="always")}) #check new vars for errors 
 
 
+1

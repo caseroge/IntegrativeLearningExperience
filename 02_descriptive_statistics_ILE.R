@@ -52,3 +52,4 @@ write2word(table1_cohort, "ILE_table1_test.docx",
 
 
 
+1

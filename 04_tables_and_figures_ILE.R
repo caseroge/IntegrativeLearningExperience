@@ -37,6 +37,6 @@ tidy_mod %>% filter(term != "(Intercept)") %>% #remove intercept ggplot
   scale_x_log10() +
   labs(x="Odds Ratio (log scale)", y = NULL, title = 'Predictors of Drug Resistance')
            
-           
+           1
          
 
