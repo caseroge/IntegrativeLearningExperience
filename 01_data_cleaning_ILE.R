@@ -1,9 +1,9 @@
 #ILE Data Cleaning
 pacman::p_load(tidyverse, readr, readxl, lubridate, arsenal, openxlsx)
 moldova_raw <- read_xlsx("Moldova_data_for_ILE.xlsx") #read in file
-dim(moldova_raw) #check dimension
+dim(moldova_raw) #check dimension 11687 rows 
 #select only desired vars 
-moldova1 <- moldova_raw %>% dplyr::select(
+moldova1 <- moldova_raw %>% filter(P24 == 1) %>% dplyr::select(
   ID = a.ID,
   detention = P11,
   iso = P21_H,
@@ -18,7 +18,8 @@ moldova1 <- moldova_raw %>% dplyr::select(
   hiv = aP28
 )
 
-#clean vars and create new vars off old cars
+dim(moldova1) #7966 rows 
+#clean vars and create new vars off old vars
 #look at vars before
 sapply(moldova1[-c(1, 5, 6)], function(x) {table(x, useNA="always")})
 class(moldova1$bday)
@@ -50,8 +51,8 @@ moldova2 <- moldova1 %>% mutate(
   ),
   rural.f = factor(rural, levels = c(0,1), labels = c("Urban", "Rural")), #factor rural
   homeless = case_when( #homeless
-    house == "Y" ~ 0,
-    house == "N" ~ 1,
+    house == "Y" ~ 1,
+    house == "N" ~ 0,
     TRUE ~ NA_real_
   ),
   homeless.f = factor(homeless, levels = c(0,1), labels = c("Not Homeless", "Homelesss")), #factor homelessness
@@ -68,8 +69,11 @@ moldova2 <- moldova1 %>% mutate(
   edu.f = factor(edu, levels=c(5,1,2,3,4), #factor education status
                     labels=c("None", "Primary", "Secondary", "Specialized_secondary", "Higher")),
   hiv = case_when( #create HIV var
-    hiv == 2 ~ 1,
-    TRUE ~ 0
+    hiv == 2 ~ 1,   # tested positive = HIV
+    hiv == 3 ~ 0,   # tested negative = no HIV
+    hiv == 1 ~ 0,   # untested = no HIV
+    hiv == 4 ~ NA_real_,  # tested but unknown result = NA
+    TRUE ~ NA_real_
   ),
   hiv.f = factor(hiv, levels = c(0,1), labels = c("No HIV Co-Infection", "HIV Co-Infection")), #factor HIV
   bday = base::as.Date(bday), #clean bday date
@@ -81,9 +85,10 @@ moldova3 <- moldova2 %>% dplyr::select(-c("ID", "detention", "iso", "rif", "bday
                                    "diagnosis_day", "sex", "urbanrural", 
                                    "house", "job", "jobcat", "edu", "hiv", "ever_deten", 
                                    "resistant", "sexM", "rural", "homeless"))
+moldova4 <- moldova3 %>%
+  filter(!is.na(ever_deten.f) & !is.na(resistant.f))
 
-moldova <- moldova3
+moldova <- moldova4
 sapply(moldova, function(x) {table(x, useNA="always")}) #check new vars for errors 
 
 
-1

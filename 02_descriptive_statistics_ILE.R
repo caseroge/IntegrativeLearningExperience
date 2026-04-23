@@ -8,14 +8,16 @@ table1_cohort <- tableby(
   data = moldova,
   control = tableby.control(
     test = TRUE,                 
-    total = TRUE,
-    numeric.stats = c("meansd", "median", "range"),
-    cat.stats = c("countpct"),
+    total = FALSE,
+    numeric.stats = c("meansd", "Nmiss2"),
+    cat.stats = c("countpct", "Nmiss2"),
     stats.labels = list(
       meansd = "Mean (SD)",
       median = "Median",
       range = "Range",
-      countpct = "N (%)" ) ) )
+      countpct = "N (%)",
+    Nmiss = "Missing N (%)") ) )
+
 
 tab1 <- summary(table1_cohort,
         title = "Table 1.",
@@ -30,6 +32,8 @@ tab1 <- summary(table1_cohort,
           edu.f="Educational Status",
           hiv.f="HIV Co-Infection Status"
           ))
+
+tab1
 write2word(table1_cohort, "ILE_table1_test.docx",
         title = "Table 1.",
         digits = 2,
